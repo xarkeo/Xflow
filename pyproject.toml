@@ -1,0 +1,81 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "xarkeo"
+version = "1.0.0"
+description = "Fast, pandas-first Python client for the Xarkeo market data API."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Xarkeo" },
+]
+keywords = ["finance", "market-data", "xarkeo", "china-stocks"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business :: Financial :: Investment",
+  "Typing :: Typed",
+]
+dependencies = [
+  "httpx[http2]>=0.27,<1",
+  "pandas>=2.0,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "build>=1,<2",
+  "mypy>=1.10,<2",
+  "pytest>=8,<9",
+  "pytest-benchmark>=5,<6",
+  "respx>=0.21,<1",
+  "ruff>=0.6,<1",
+  "twine>=7,<8",
+]
+
+[project.urls]
+Homepage = "https://xarkeo.com"
+Documentation = "https://api.xarkeo.com"
+Repository = "https://github.com/xarkeo/xarkeo-python"
+Issues = "https://github.com/xarkeo/xarkeo-python/issues"
+
+[tool.hatch.build]
+exclude = [
+  ".claude",
+  ".pytest_cache",
+  ".ruff_cache",
+  "benchmark-report.json",
+  "tmp.txt",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/xarkeo"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src/xarkeo"]
+
+[tool.coverage.run]
+branch = true
+source = ["xarkeo"]
