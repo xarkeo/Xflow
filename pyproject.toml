@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "xarkeo"
+name = "xflow"
 version = "1.0.0"
 description = "Fast, pandas-first Python client for the Xarkeo market data API."
 readme = "README.md"
@@ -12,7 +12,7 @@ license = { text = "MIT" }
 authors = [
   { name = "Xarkeo" },
 ]
-keywords = ["finance", "market-data", "xarkeo", "china-stocks"]
+keywords = ["finance", "market-data", "xflow", "xarkeo", "china-stocks"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
@@ -45,8 +45,8 @@ dev = [
 [project.urls]
 Homepage = "https://xarkeo.com"
 Documentation = "https://api.xarkeo.com"
-Repository = "https://github.com/xarkeo/xarkeo-python"
-Issues = "https://github.com/xarkeo/xarkeo-python/issues"
+Repository = "https://github.com/xarkeo/xflow"
+Issues = "https://github.com/xarkeo/xflow/issues"
 
 [tool.hatch.build]
 exclude = [
@@ -55,10 +55,12 @@ exclude = [
   ".ruff_cache",
   "benchmark-report.json",
   "tmp.txt",
+  "**/__pycache__",
+  "*.pyc",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/xarkeo"]
+packages = ["src/xflow"]
 
 [tool.pytest.ini_options]
 addopts = "-ra"
@@ -74,7 +76,7 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 [tool.mypy]
 python_version = "3.10"
 strict = true
-files = ["src/xarkeo"]
+files = ["src/xflow"]
 
 [tool.coverage.run]
 branch = true

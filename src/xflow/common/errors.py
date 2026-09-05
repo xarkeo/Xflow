@@ -1,4 +1,4 @@
-"""Exceptions raised by the Xarkeo client."""
+"""XFlow 异常体系（细分错误类型，不泄露 token）。"""
 
 from __future__ import annotations
 

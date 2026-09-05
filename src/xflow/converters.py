@@ -12,21 +12,18 @@ SECURITY_COLUMNS = (
     "symbol",
     "name",
     "exchange",
+    "security_type",
     "status",
-    "created_at",
-    "updated_at",
 )
 DAILY_COLUMNS = (
-    "id",
-    "security_id",
-    "trade_date",
+    "symbol",
+    "date",
     "open",
     "high",
     "low",
     "close",
     "volume",
     "amount",
-    "source",
 )
 ACTION_COLUMNS = (
     "id",
@@ -56,6 +53,10 @@ QUOTE_COLUMNS = (
     "source",
 )
 CALENDAR_COLUMNS = ("date", "exchange", "is_trading_day")
+ADJUSTMENT_FACTOR_COLUMNS = ("symbol", "date", "hfq_factor")
+BLOCK_COLUMNS = ("block_code", "block_name", "block_type")
+BLOCK_MEMBER_COLUMNS = ("symbol", "name")
+MINUTE_COLUMNS = ("symbol", "date", "time", "open", "high", "low", "close", "volume", "amount")
 
 
 def to_frame(
