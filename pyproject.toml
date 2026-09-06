@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "xflow"
-version = "1.0.0"
+version = "0.0.1"
 description = "Fast, pandas-first Python client for the Xarkeo market data API."
 readme = "README.md"
 requires-python = ">=3.10"
