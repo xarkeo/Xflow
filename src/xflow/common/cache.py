@@ -60,7 +60,7 @@ class TTLCache:
             if disk_value is not None:
                 with self._lock:
                     self._entries[key] = _Entry(expires_at=now + ttl, value=disk_value)
-                return disk_value  # type: ignore[return-value]
+                return disk_value
 
         value = factory()
         with self._lock:

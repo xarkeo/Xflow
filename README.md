@@ -1,7 +1,7 @@
 # XFlow
 
-[![PyPI version](https://img.shields.io/pypi/v/xflow.svg)](https://pypi.org/project/xflow/)
-[![Python versions](https://img.shields.io/pypi/pyversions/xflow.svg)](https://pypi.org/project/xflow/)
+[![PyPI version](https://img.shields.io/pypi/v/xarkeo-xflow.svg)](https://pypi.org/project/xarkeo-xflow/)
+[![Python versions](https://img.shields.io/pypi/pyversions/xarkeo-xflow.svg)](https://pypi.org/project/xarkeo-xflow/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **Pandas-first Python access to the Xarkeo market data API.**
@@ -15,7 +15,7 @@ XFlow 是 [Xarkeo](https://xarkeo.com) 官方出品的 Python 客户端，让你
 ### 1. 安装
 
 ```bash
-python -m pip install xflow
+python -m pip install xarkeo-xflow
 ```
 
 ### 2. 获取 Token（免费）

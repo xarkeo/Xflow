@@ -98,7 +98,7 @@ class XflowClient:
         self.bond = BondAPI(self)
         self.futures = FuturesAPI(self)
 
-    def __enter__(self) -> "XflowClient":
+    def __enter__(self) -> XflowClient:
         return self
 
     def __exit__(self, *args: object) -> None:
@@ -215,7 +215,7 @@ class XflowClient:
     ) -> Iterator[pd.DataFrame]:
         """惰性逐页迭代日线。"""
         yield from iterate_pages(
-            lambda page: self.daily(symbol, exchange=exchange, page=page, page_size=page_size, start_date=start_date, end_date=end_date, cache=cache),
+            lambda page: self.daily(symbol, exch=exchange, page=page, page_size=page_size, start_date=start_date, end_date=end_date, cache=cache),
             page_size=page_size,
             max_pages=max_pages,
         )

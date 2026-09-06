@@ -21,7 +21,7 @@ class Config:
     extra: dict[str, str] = field(default_factory=dict)
 
     @classmethod
-    def from_env(cls) -> "Config":
+    def from_env(cls) -> Config:
         """从环境变量加载配置。"""
         return cls(
             token=os.environ.get("XARKEO_TOKEN"),

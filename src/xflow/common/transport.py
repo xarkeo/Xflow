@@ -7,7 +7,14 @@ from typing import Any
 
 import httpx
 
-from .errors import ApiError, AuthenticationError, NotFoundError, RateLimitError, TransportError, ValidationError
+from .errors import (
+    ApiError,
+    AuthenticationError,
+    NotFoundError,
+    RateLimitError,
+    TransportError,
+    ValidationError,
+)
 
 DEFAULT_BASE_URL = "https://api.xarkeo.com/api/v1"
 DEFAULT_TIMEOUT = httpx.Timeout(connect=2.0, read=10.0, write=10.0, pool=2.0)
