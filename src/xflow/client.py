@@ -27,7 +27,7 @@ from .assets import (
     StockAPI,
 )
 from .common import ConfigurationError
-from .common._utils import date_value, exchange, path_part, positive_int
+from .common._utils import date_value, exchange, nonempty_string, path_part, positive_int
 from .common.auth import Auth
 from .common.cache import CacheInfo, TTLCache
 from .common.pagination import collect_pages, iterate_pages, with_page_attrs
@@ -128,7 +128,7 @@ class XflowClient:
         """单个证券。"""
         payload = self._get(
             f"/securities/{path_part(symbol)}",
-            {"exchange": exchange(exchange)},
+            {"exchange": nonempty_string(exchange, "exchange")},
             cache=cache,
         )
         return to_frame(payload, columns=SECURITY_COLUMNS)
@@ -144,10 +144,10 @@ class XflowClient:
         """证券列表。"""
         payload = self._get(
             "/securities",
-            {"exchange": exchange(exchange), "page": positive_int(page, "page"), "page_size": positive_int(page_size, "page_size")},
+            {"exchange": nonempty_string(exchange, "exchange"), "page": positive_int(page, "page"), "page_size": positive_int(page_size, "page_size")},
             cache=cache,
         )
-        return with_page_attrs(collection(payload, "securities", columns=SECURITY_COLUMNS), payload)
+        return with_page_attrs(collection(payload, "data", columns=SECURITY_COLUMNS), payload)
 
     def daily(
         self,
@@ -178,7 +178,7 @@ class XflowClient:
         """最新日线。"""
         payload = self._get(
             f"/securities/{path_part(symbol)}/daily/latest",
-            {"exchange": exchange(exchange)},
+            {"exchange": nonempty_string(exchange, "exchange")},
             cache=cache,
         )
         return to_frame(payload, columns=DAILY_COLUMNS)
