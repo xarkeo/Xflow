@@ -15,7 +15,9 @@ from ..common._utils import date_value, exchange, path_part, positive_int
 from ..common.pagination import collect_pages, iterate_pages, with_page_attrs
 from ..converters import (
     ADJUSTMENT_FACTOR_COLUMNS,
+    BILLBOARD_COLUMNS,
     DAILY_COLUMNS,
+    FINANCIAL_INDICATOR_COLUMNS,
     MINUTE_COLUMNS,
     SECURITY_COLUMNS,
     collection,
@@ -59,14 +61,31 @@ class StockAPI:
         exch: str = "",
         beg: str | date | datetime | None = None,
         end: str | date | datetime | None = None,
+        frequency: str = "d",
         page: int = 1,
         page_size: int = 100,
         cache: bool = True,
     ) -> pd.DataFrame:
-        """日线 K 线（与 efinance/akshare 兼容）。
+        """K 线（与 efinance/akshare 兼容）。
 
+        frequency: d=日线, w=周线, m=月线, q=季线, y=年线（默认日线）。
         XFin daily 接口参数：start/end（日期过滤）。
         """
+        # 周期 K 线走 /period 接口
+        if frequency in ("w", "m", "q", "y"):
+            payload = self._client._get(
+                f"/securities/{path_part(symbol)}/period",
+                {
+                    "period": frequency,
+                    "page": positive_int(page, "page"),
+                    "page_size": positive_int(page_size, "page_size"),
+                    "start": date_value(beg),
+                    "end": date_value(end),
+                },
+                cache=cache,
+            )
+            return with_page_attrs(collection(payload, "data", columns=DAILY_COLUMNS), payload)
+
         payload = self._client._get(
             f"/securities/{path_part(symbol)}/daily",
             {
@@ -146,6 +165,16 @@ class StockAPI:
         payload = self._client._get(f"/securities/{path_part(symbol)}/financials", {}, cache=cache)
         return collection(payload, "data", columns=("symbol", "report_date"))
 
+    def get_financial_indicators(self, symbol: str, *, cache: bool = True) -> pd.DataFrame:
+        """财务指标（盈利能力/成长/偿债/营运/收益质量/每股）。
+
+        对应 baostock 的季频财务指标（query_profit_data / query_growth_data 等）。
+        """
+        payload = self._client._get(
+            f"/securities/{path_part(symbol)}/financials/indicators", {}, cache=cache
+        )
+        return collection(payload, "data", columns=FINANCIAL_INDICATOR_COLUMNS)
+
     def get_features(self, symbol: str, *, cache: bool = True) -> pd.DataFrame:
         """特征快照。"""
         payload = self._client._get(f"/securities/{path_part(symbol)}/features", {}, cache=cache)
@@ -155,6 +184,22 @@ class StockAPI:
         """筹码分布快照。"""
         payload = self._client._get(f"/securities/{path_part(symbol)}/chip", {}, cache=cache)
         return collection(payload, "data", columns=("symbol", "date"))
+
+    # ── 龙虎榜 ──
+    def get_billboard(self, date: str, *, cache: bool = True) -> pd.DataFrame:
+        """指定日期的龙虎榜（对应 efinance get_billboard_data）。
+
+        date: YYYY-MM-DD
+        """
+        payload = self._client._get("/billboard", {"date": date}, cache=cache)
+        return collection(payload, "data", columns=BILLBOARD_COLUMNS)
+
+    def get_billboard_by_symbol(self, symbol: str, *, limit: int = 20, cache: bool = True) -> pd.DataFrame:
+        """指定股票的历史龙虎榜。"""
+        payload = self._client._get(
+            f"/securities/{path_part(symbol)}/billboard", {"limit": limit}, cache=cache
+        )
+        return collection(payload, "data", columns=BILLBOARD_COLUMNS)
 
     def iter_daily(
         self,

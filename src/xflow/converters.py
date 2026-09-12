@@ -57,6 +57,58 @@ ADJUSTMENT_FACTOR_COLUMNS = ("symbol", "date", "hfq_factor")
 BLOCK_COLUMNS = ("block_code", "block_name", "block_type")
 BLOCK_MEMBER_COLUMNS = ("symbol", "name")
 MINUTE_COLUMNS = ("symbol", "date", "time", "open", "high", "low", "close", "volume", "amount")
+FINANCIAL_INDICATOR_COLUMNS = (
+    "symbol",
+    "report_date",
+    "report_year",
+    "report_quarter",
+    "known_at",
+    # 盈利能力
+    "roe",
+    "roe_diluted",
+    "roe_avg",
+    "roa",
+    "gross_margin",
+    "net_margin",
+    # 成长能力
+    "revenue_yoy",
+    "profit_yoy",
+    # 偿债能力
+    "debt_ratio",
+    "current_ratio",
+    "quick_ratio",
+    "equity_multiplier",
+    # 营运能力
+    "receivable_turn",
+    "inventory_turn",
+    "asset_turn",
+    # 收益质量
+    "ocf_to_revenue",
+    # 每股指标
+    "eps",
+    "bps",
+    "ocf_per_share",
+)
+INDEX_CONSTITUENT_COLUMNS = (
+    "index_code",
+    "index_name",
+    "symbol",
+    "name",
+    "effective_date",
+)
+BILLBOARD_COLUMNS = (
+    "trade_date",
+    "symbol",
+    "name",
+    "close_price",
+    "change_rate",
+    "turnover_rate",
+    "buy_amount",
+    "sell_amount",
+    "net_amount",
+    "accum_amount",
+    "explanation",
+)
 
 
 def to_frame(
